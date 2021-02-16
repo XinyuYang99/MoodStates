@@ -1,32 +1,35 @@
+
 /***********************************************************************************
-	SimpleStateMachine - TEMPLATE
-	by Scott Kildall
+  SimpleStateMachine - TEMPLATE
+  by Scott Kildall
 
-	Template:
+  Template:
 
-	(1) Add your own PNG files in the assets folder. Make sure they match the names ***exactly*** of the existing PNGs.
-	(2) Add custom drawing code to drawOne(), drawTwo(), drawThree(), drawFour(), drawFive()
-	(3) You can add your own interfaces - keys, mouse events, etc in the Interfaces section
+  (1) Add your own PNG files in the assets folder. Make sure they match the names ***exactly*** of the existing PNGs.
+  (2) Add custom drawing code to drawSplash(), drawOne(), drawTwo(), drawThree(), drawFour(), drawFive()
+  (3) You can add your own interfaces - keys, mouse events, etc in the Interfaces section
 
-	Also start your localhost before running this, otherwise no PNGs will display
-
-------------------------------------------------------------------------------------
-	The way it works — you don't need to know this for the template use
-	* array of images gets loaded at startup
-	* drawFunction is a VARIABLE that points to a function varible name
-	* drawOne(), drawTwo(), etc. are set to be functions.
-	* the the keys 1-5 will change the drawFunction variable
+  Also start your localhost before running this, otherwise no PNGs will display
 
 ------------------------------------------------------------------------------------
-	Notes:
-	- a more advanced state machine with use array-indexing for each of
-		images the draw functions, but this is just for illustrative purposes
+  The way it works — you don't need to know this for the template use
+  * array of images gets loaded at startup
+  * drawFunction is a VARIABLE that points to a function varible name
+  * drawOne(), drawTwo(), etc. are set to be functions.
+  * the the keys 1-5 will change the drawFunction variable
+  * starts with drawSplash and waits for a mousePressed event
+  * adds a key, 's' to return to the splash screen
 
-	- even more advanced will be to put the draw functions into an array, would
-		be helpful for randomizing, go to the next function, etc
+------------------------------------------------------------------------------------
+  Notes:
+  - a more advanced state machine with use array-indexing variables for each of
+    images the draw functions, but this is just for illustrative purposes
 
-	- next step after that would be to put interfaces into an array that maps to
-		the functions
+  - even more advanced will be to put the draw functions into an array, would
+    be helpful for randomizing, go to the next function, etc
+
+  - next step after that would be to put interfaces into an array that maps to
+    the functions
 
 
 ***********************************************************************************/
@@ -47,6 +50,7 @@ function preload() {
   images[2] = loadImage('assets/three.png');
   images[3] = loadImage('assets/four.png');
   images[4] = loadImage('assets/five.png');
+  images[5] = loadImage('assets/splash.png');
 }
 
 // Center drawing, drawFunction will be one for default
@@ -59,7 +63,7 @@ function setup() {
   textSize(24);
 
   // set to one for startup
-  drawFunction = drawOne;
+  drawFunction = drawSplash;
 }
 
 // Very simple, sets the background color and calls your state machine function
@@ -117,24 +121,44 @@ drawFive = function() {
    text("State Five", width/2, height - gTextOffset);
 }
 
+//-- drawSplash() will draw the image at index 4 from the array
+drawSplash = function() {
+   image(images[5],width/2, height/2);
+}
+
 
 //========= TEMPLATE: add or change interface functions, as you like =========
 
 // Change the drawFunction variable based on your interaction
 function keyTyped() {
+  if( drawFunction === drawSplash ) {
+    return;
+  }
+
   if( key === '1' ) {
-  	drawFunction = drawOne;
+    drawFunction = drawOne;
   }
   else if( key === '2' ) {
-  	drawFunction = drawTwo;
+    drawFunction = drawTwo;
   }
   else if( key === '3' ) {
-  	drawFunction = drawThree;
+    drawFunction = drawThree;
   }
   else if( key === '4' ) {
-  	drawFunction = drawFour;
+    drawFunction = drawFour;
   }
   else if( key === '5' ) {
-  	drawFunction = drawFive;
+    drawFunction = drawFive;
+  }
+
+  else if( key === 's' ) {
+    drawFunction = drawSplash;
+  }
+}
+
+function mousePressed() {
+  // only change state if we are in splash screen
+  if( drawFunction === drawSplash ) {
+    drawFunction = drawOne;
   }
 }

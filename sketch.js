@@ -77,6 +77,7 @@ drawOne = function() {
    image(images[0],width/2, height/2);
 
    fill(0,0,0);
+   text("Good morning! What a wonderful day!", width/2, height - 5* gTextOffset);
    text("State One", width/2, height - gTextOffset);
 }
 
@@ -85,6 +86,7 @@ drawTwo = function() {
    image(images[1],width/2, height/2);
 
    fill(240,120,0);
+   text("Missing all of you!", width/2, height - 5* gTextOffset);
    text("State Two", width/2, height - gTextOffset);
 }
 
@@ -93,6 +95,7 @@ drawThree = function() {
    image(images[2],width/2, height/2);
 
    fill(40,230,120);
+   text("Lunch is so delicious!", width/2, height - 5* gTextOffset);
    text("State Three", width/2, height - gTextOffset);
 }
 
@@ -101,6 +104,7 @@ drawFour = function() {
    image(images[3],width/2, height/2);
 
    fill(255,255,178);
+   text("Expecting! Waiting meesages from you!", width/2, height - 5* gTextOffset);
    text("State Four", width/2, height - gTextOffset);
 }
 
@@ -109,6 +113,7 @@ drawFive = function() {
    image(images[4],width/2, height/2);
 
    fill(230,50,50);
+   text("Sad! No one sent me a message. Heart broken!", width/2, height - 5* gTextOffset);
    text("State Five", width/2, height - gTextOffset);
 }
 

@@ -37,6 +37,11 @@
 // Array of images
 var images = [];
 
+var strings = [];
+var midX;
+var startY;
+var lineHeight = 24;
+
 // variable that is a function 
 var drawFunction;
 
@@ -57,13 +62,17 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  // Center our drawing objects
+  midX = width/2;
+  startY = 60;
+  // Center our drawing object
   imageMode(CENTER);
   textAlign(CENTER);
   textSize(24);
 
+
   // set to one for startup
   drawFunction = drawSplash;
+
 }
 
 // Very simple, sets the background color and calls your state machine function
@@ -123,9 +132,37 @@ drawFive = function() {
 
 //-- drawSplash() will draw the image at index 4 from the array
 drawSplash = function() {
-   image(images[5],width/2, height/2);
+  image(images[5],width/2, height/2);
+  text("Click to continue", width/2, height - gTextOffset);
 }
 
+
+drawInstructure = function() {
+  loadArray();
+  image(images[0],width *1 /6, height/2,width/7,width/7);
+  image(images[1],width *2 /6, height/2,width/7,width/7);
+  image(images[2],width *3 /6, height/2,width/7,width/7);
+  image(images[3],width *4 /6, height/2,width/7,width/7);
+  image(images[4],width *5 /6, height/2,width/7,width/7);
+
+}
+
+
+
+function loadArray() {
+  strings[0] = "press number 1-5 to see a mood";
+  strings[1] = "";
+  strings[2] = "press 's' back to the beginning";
+  strings[3] = "";
+  strings[4] = "press 'i' back to this page";
+  strings[5] = "";
+  strings[6] = "Or you can click the image";
+  strings[7] = "";
+  fill(255);
+  for( let i = 0 ; i < strings.length; i++ ) {
+    text( strings[i], midX, startY + (i * lineHeight) )
+  }
+}
 
 //========= TEMPLATE: add or change interface functions, as you like =========
 
@@ -135,30 +172,53 @@ function keyTyped() {
     return;
   }
 
-  if( key === '1' ) {
-    drawFunction = drawOne;
-  }
-  else if( key === '2' ) {
-    drawFunction = drawTwo;
-  }
-  else if( key === '3' ) {
-    drawFunction = drawThree;
-  }
-  else if( key === '4' ) {
-    drawFunction = drawFour;
-  }
-  else if( key === '5' ) {
-    drawFunction = drawFive;
-  }
-
-  else if( key === 's' ) {
-    drawFunction = drawSplash;
-  }
+    if( key === '1' ) {
+      drawFunction = drawOne;
+    }
+    else if( key === '2' ) {
+      drawFunction = drawTwo;
+    }
+    else if( key === '3' ) {
+      drawFunction = drawThree;
+    }
+    else if( key === '4' ) {
+      drawFunction = drawFour;
+    }
+    else if( key === '5' ) {
+      drawFunction = drawFive;
+    }
+    else if( key === 's' ) {
+      drawFunction = drawSplash;
+    }
+    else if( key === 'i' ) {
+      drawFunction = drawInstructure;
+    }
+  
 }
 
 function mousePressed() {
   // only change state if we are in splash screen
   if( drawFunction === drawSplash ) {
-    drawFunction = drawOne;
+    drawFunction = drawInstructure;
   }
+  else if ( drawFunction === drawInstructure) {
+    if (mouseY >= (height *1 /2 - width *1 /14) && mouseY <= (height *1 /2 + width *1 /14)) {
+      if (mouseX > (width *1 /6 - width *1 /14), mouseX < (width *1 /6 + width *1 /14) ) {
+        drawFunction = drawOne;
+      }
+      else if (mouseX > (width *2 /6 - width *1 /14), mouseX < (width *2 /6 + width *1 /14) ) {
+        drawFunction = drawTwo;
+      }
+      else if (mouseX > (width *3 /6 - width *1 /14), mouseX < (width *3 /6 + width *1 /14)) {
+        drawFunction = drawThree;
+      }
+      else if (mouseX > (width *4 /6 - width *1 /14), mouseX < (width *4 /6 + width *1 /14)) {
+        drawFunction = drawFour;
+      }
+      else if (mouseX > (width *5 /6 - width *1 /14), mouseX < (width *5 /6 + width *1 /14)) {
+        drawFunction = drawFive;
+      }
+    }
+  }
+
 }
